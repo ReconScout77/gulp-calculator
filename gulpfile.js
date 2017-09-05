@@ -1,3 +1,4 @@
+var del = require('del');
 var gulp = require('gulp');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
@@ -26,7 +27,11 @@ gulp.task("minifyScripts", ["jsBrowserify"], function() {
     .pipe(gulp.dest("./build/js"));
 });
 
-gulp.task("build", function(){
+gulp.task("clean", function(){
+  return del(['build', 'tmp']);
+});
+
+gulp.task("build", ['clean'], function(){
   if (buildProduction) {
     gulp.start('minifyScripts');
   }else {
